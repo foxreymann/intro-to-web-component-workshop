@@ -1,0 +1,51 @@
+<h1>Spoilers</h1>
+<p>The RMS Titanic sets sail for New York, <component-spoiler>and then subsequently sinks</component-spoiler>.</p>
+
+<p>Luke Skywalker engages in a battle with Darth Vadar, <component-spoiler>who is then revealed to be his father</component-spoiler>.</p>
+
+<p>Harry Potter goes to a wizarding school, <component-spoiler>but after much too-ing-and-fro-ing, Snape kills Dumbledore</component-spoiler>.</p>
+
+<template id="component-spoiler-template">
+    <style>
+
+        span#content{
+            background: black;
+            color: black;
+            padding: 1px 2px;
+        }
+
+        span#content:hover{
+            color:white;
+        }
+
+    </style>
+    <span id="content"></span>
+
+</template>
+<!--SNIPPET ZERO-->
+<script>
+
+    const templateElement = document.body.querySelector('template#component-spoiler-template');
+
+    class Spoiler extends HTMLElement {
+
+        constructor() {
+
+            super();
+
+            const elementNode = this;
+
+            elementNode.attachShadow({mode: 'open'});
+            elementNode.shadowRoot.appendChild(document.importNode(templateElement.content, true));
+
+            const contentNode = elementNode.shadowRoot.querySelector('#content');
+            contentNode.textContent = elementNode.textContent;
+
+            console.log(elementNode);
+
+        }
+
+    }
+    window.customElements.define('component-spoiler', Spoiler);
+
+</script>
